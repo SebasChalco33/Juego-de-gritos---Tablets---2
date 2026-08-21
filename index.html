@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#1B8ACB">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Gr&iacute;talo</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="styles.css">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body>
+
+<!-- ============ ACTIVACION DE LA TABLET ============ -->
+<section class="pantalla" id="p-activacion">
+  <div class="reg-caja">
+    <h2 class="reg-tit">ACTIVAR ESTA TABLET</h2>
+    <p class="reg-sub">Solo se pide <b>una vez por tablet</b>. Una vez activada,
+      el juego abre directo y no vuelve a preguntar.</p>
+
+    <label class="reg-lbl" for="actCodigo">C&oacute;digo de activaci&oacute;n</label>
+    <input class="reg-inp" id="actCodigo" type="password" autocomplete="off"
+           autocapitalize="characters" spellcheck="false" enterkeyhint="done"
+           placeholder="C&oacute;digo del instalador">
+
+    <p class="reg-error" id="actError"></p>
+    <button class="btn-negro ancho" id="btnActivarTablet">ACTIVAR</button>
+  </div>
+</section>
+
+<!-- ============ PERMISO / ARRANQUE ============ -->
+<section class="pantalla activa" id="p-permiso">
+  <div class="poster-wrap">
+    <div class="poster">
+      <img class="pz marca-wordmark" data-pz="wordmark" src="marca/mirasol.png" alt="">
+      <img class="pz" data-pz="gritalo"  src="marca/gritalo.png" alt="Gr&iacute;talo">
+      <img class="pz" data-pz="lineas-izq" src="marca/lineas-izq.png" alt="">
+      <img class="pz" data-pz="boca" src="marca/boca.png" alt="">
+      <img class="pz" data-pz="lineas-der" src="marca/lineas-der.png" alt="">
+      <img class="pz" data-pz="eslogan" src="marca/eslogan.png" alt="Si lo quieres de verdad, que todo el mundo te escuche...">
+    </div>
+  </div>
+  <div class="pie">
+    <button class="btn-negro" id="btnActivar">ACTIVAR MICR&Oacute;FONO</button>
+    <p class="nota" id="notaPermiso">Se necesita permiso del micr&oacute;fono para medir tu grito.</p>
+  </div>
+</section>
+
+<!-- ============ REPOSO / ATRACCION ============ -->
+<section class="pantalla" id="p-reposo">
+  <!-- el poster va recortado bajo la boca: el eslogan se muestra al final,
+       para dejarle sitio a los premios -->
+  <div class="poster-wrap">
+    <div class="poster-recorte">
+      <div class="poster respira">
+        <img class="pz marca-wordmark" data-pz="wordmark" src="marca/mirasol.png" alt="">
+        <img class="pz" data-pz="gritalo"  src="marca/gritalo.png" alt="Gr&iacute;talo">
+        <img class="pz late-izq" data-pz="lineas-izq" src="marca/lineas-izq.png" alt="">
+        <img class="pz boca-late" data-pz="boca" src="marca/boca.png" alt="">
+        <img class="pz late-der" data-pz="lineas-der" src="marca/lineas-der.png" alt="">
+      </div>
+    </div>
+  </div>
+  <div class="pie">
+    <div class="toca-empezar">TOCA PARA EMPEZAR</div>
+    <div class="premios-tira" id="tiraPremios"></div>
+    <img class="eslogan-pie" src="marca/eslogan.png" alt="Si lo quieres de verdad, que todo el mundo te escuche...">
+  </div>
+</section>
+
+<!-- ============ REGISTRO DEL PARTICIPANTE ============ -->
+<section class="pantalla" id="p-registro">
+  <div class="reg-caja">
+    <h2 class="reg-tit">REG&Iacute;STRATE PARA JUGAR</h2>
+    <p class="reg-sub">Tus datos se guardan solo en esta tablet.</p>
+
+    <label class="reg-lbl" for="regNombre">Nombre y apellido</label>
+    <input class="reg-inp" id="regNombre" type="text" autocomplete="off"
+           autocapitalize="words" enterkeyhint="next" placeholder="Ej: Ana P&eacute;rez">
+
+    <label class="reg-lbl" for="regCedula">C&eacute;dula</label>
+    <input class="reg-inp" id="regCedula" type="tel" inputmode="numeric" autocomplete="off"
+           enterkeyhint="done" maxlength="13" placeholder="Ej: 1712345678">
+
+    <p class="reg-error" id="regError"></p>
+
+    <button class="btn-negro ancho" id="btnRegOk">CONTINUAR</button>
+    <button class="btn-texto" id="btnRegCancelar">Cancelar</button>
+  </div>
+</section>
+
+<!-- ============ CUENTA REGRESIVA ============ -->
+<section class="pantalla" id="p-cuenta">
+  <p class="prepara">PREP&Aacute;RATE</p>
+  <div class="cuenta-num" id="cuentaNum">3</div>
+</section>
+
+<!-- ============ GRITO ============ -->
+<section class="pantalla" id="p-grito">
+  <img class="gritalo-top" src="marca/gritalo.png" alt="Gr&iacute;talo">
+
+  <div class="escena">
+    <img class="esc-lineas izq" id="lineasIzqG" src="marca/lineas-izq.png" alt="">
+    <img class="esc-boca" id="bocaGrito" src="marca/boca.png" alt="">
+    <img class="esc-lineas der" id="lineasDerG" src="marca/lineas-der.png" alt="">
+    <!-- el nivel va DENTRO de la boca: el interior oscuro hace de fondo -->
+    <div class="nivel-num" id="nivelNum">0</div>
+  </div>
+
+  <div class="medidor">
+    <div class="barra">
+      <!-- el degradado verde-naranja-rojo ocupa SIEMPRE el ancho completo y se
+           revela con clip-path, para que cada color quede fijo en su tramo -->
+      <div class="barra-fill" id="barraFill"></div>
+      <div class="barra-marcas" id="marcasUmbral"></div>
+    </div>
+    <div class="pico-linea">PICO <b id="picoVal">0</b></div>
+  </div>
+</section>
+
+<!-- ============ PREMIO ============ -->
+<section class="pantalla" id="p-premio">
+  <canvas id="confeti"></canvas>
+  <img class="premio-img" id="premioImg" src="marca/premio-verde.png" alt="">
+  <h2 class="premio-titulo" id="premioTitulo">&iexcl;GANASTE!</h2>
+  <p class="premio-nombre" id="premioNombre">Souvenir</p>
+  <div class="premio-nivel">Tu grito lleg&oacute; a <b id="premioNivel">0</b></div>
+  <div class="premio-cta" id="premioCta">Reclama tu premio</div>
+  <button class="btn-blanco" id="btnOtraVez">JUGAR OTRA VEZ</button>
+</section>
+
+<!-- ============ PANEL DE AJUSTES ============ -->
+<section class="pantalla panel" id="p-admin">
+  <div class="panel-scroll">
+    <h2 class="panel-h1">Ajustes <span class="panel-ver" id="panelVer"></span></h2>
+    <p class="panel-sub">Los cambios se guardan en esta tablet.</p>
+
+    <div class="tarjeta">
+      <h3>Marca</h3>
+      <p class="ayuda">Elige el logo que se muestra en pantalla. Tambi&eacute;n puedes fijarlo por
+        URL con <b>?marca=mirasol</b>, <b>?marca=proauto</b> o <b>?marca=emaulme</b>.</p>
+      <div class="fila-btns">
+        <button class="btn-marca" id="btnMarcaMirasol"><img src="marca/mirasol.png" alt="Mirasol"></button>
+        <button class="btn-marca" id="btnMarcaProauto"><img src="marca/proauto.png" alt="Proauto"></button>
+        <button class="btn-marca" id="btnMarcaEmaulme"><img src="marca/emaulme.png" alt="E.Maulme"></button>
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Micr&oacute;fono en vivo</h3>
+      <div class="live-barra"><span id="liveFill"></span></div>
+      <div class="live-datos">
+        nivel <b id="liveNivel">0</b> &middot; <b id="liveDb">-99</b> dB &middot;
+        premio <b id="livePremio">&mdash;</b>
+      </div>
+      <div class="mic-en-uso" id="micEnUso">&mdash;</div>
+      <div class="fila-btns">
+        <button class="btn-cal verde" id="btnFijarHabla">Fijar HABLA</button>
+        <button class="btn-cal rojo" id="btnFijarGrito">Fijar GRITO (3s)</button>
+      </div>
+      <p class="ayuda">Fija HABLA en silencio/charla normal y GRITO con un grito real. Cuanto m&aacute;s separados, m&aacute;s gradual el medidor.</p>
+      <div class="campo"><label>Piso &mdash; habla (dB)</label>
+        <div class="stepper"><button data-k="pisoDb" data-d="-1">&minus;</button><span id="v-pisoDb">?</span><button data-k="pisoDb" data-d="1">+</button></div></div>
+      <div class="campo"><label>M&aacute;ximo &mdash; grito (dB)</label>
+        <div class="stepper"><button data-k="maxDb" data-d="-1">&minus;</button><span id="v-maxDb">?</span><button data-k="maxDb" data-d="1">+</button></div></div>
+      <div class="campo"><label>Micr&oacute;fono</label>
+        <select id="selMic" class="sel"></select></div>
+      <button class="btn-cal gris ancho" id="btnReconectar">Reconectar micr&oacute;fono</button>
+      <p class="ayuda">Si el micr&oacute;fono no da nivel, comprueba primero con
+        <b>test-mic.html</b>: si ah&iacute; s&iacute; se mueve y aqu&iacute; no, av&iacute;same.</p>
+      <div class="campo"><label>Micr&oacute;fono externo (recomendado)<br>
+        <span style="font-size:12px;color:#8fa3b8">En Android esto es lo que hace que se use
+        el micr&oacute;fono externo y no el de la tablet. Si lo apagas, vuelve al de la tablet.
+        Solo apágalo si el externo da problemas.</span></label>
+        <button class="btn-cal gris" id="btnPreciso" style="flex:0 0 auto;min-width:96px">&mdash;</button></div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Diagn&oacute;stico del micr&oacute;fono</h3>
+      <p class="ayuda">Si un micr&oacute;fono no da nivel, mira aqu&iacute;. Lo importante es que
+        <b>frecuencia mic</b> y <b>frecuencia audio</b> coincidan, que <b>muestras inv&aacute;lidas</b>
+        est&eacute; en 0 y que <b>silenciado</b> diga no.</p>
+      <div class="diag" id="diag"></div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Probar el grito &mdash; distribuci&oacute;n</h3>
+      <p class="ayuda">Haz varios gritos (flojo, normal, a todo pulm&oacute;n) y mira qu&eacute; premio dar&iacute;a cada uno con la calibraci&oacute;n de ahora. As&iacute; afinas los rangos antes del evento.</p>
+      <button class="btn-cal azul ancho" id="btnMedirPico">MEDIR PICO (3s)</button>
+      <div class="log-resumen" id="logResumen">&mdash;</div>
+      <div class="log-gritos" id="logGritos"></div>
+      <button class="btn-cal gris ancho" id="btnLimpiarLog" hidden>Limpiar lista</button>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Rangos de premio</h3>
+      <div class="campo"><label>M&iacute;nimo para <b id="lbl1">premio bajo</b></label>
+        <div class="stepper"><button data-k="minBajo" data-d="-1">&minus;</button><span id="v-minBajo">?</span><button data-k="minBajo" data-d="1">+</button></div></div>
+      <div class="campo"><label>M&iacute;nimo para <b id="lbl2">premio medio</b></label>
+        <div class="stepper"><button data-k="minMedio" data-d="-1">&minus;</button><span id="v-minMedio">?</span><button data-k="minMedio" data-d="1">+</button></div></div>
+      <div class="campo"><label>M&iacute;nimo para <b id="lbl3">premio mayor</b></label>
+        <div class="stepper"><button data-k="minAlto" data-d="-1">&minus;</button><span id="v-minAlto">?</span><button data-k="minAlto" data-d="1">+</button></div></div>
+      <div class="campo"><label>Duraci&oacute;n del grito (s)</label>
+        <div class="stepper"><button data-k="msGrito" data-d="-500">&minus;</button><span id="v-msGrito">?</span><button data-k="msGrito" data-d="500">+</button></div></div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Nombres de los premios</h3>
+      <p class="ayuda">Los dibujos (llavero / gorra / mochila) son fijos, salidos del arte
+        de la campa&ntilde;a. Aqu&iacute; solo se cambia el texto.</p>
+      <div class="campo"><label><span class="pt verde"></span> Nivel verde</label><input class="txt" id="txtBajo" type="text"></div>
+      <div class="campo"><label><span class="pt naranja"></span> Nivel naranja</label><input class="txt" id="txtMedio" type="text"></div>
+      <div class="campo"><label><span class="pt rojo"></span> Nivel rojo</label><input class="txt" id="txtAlto" type="text"></div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Premio mayor &mdash; sorteo oculto</h3>
+      <p class="ayuda">El premio mayor <b>no se gana solo por gritar fuerte</b>. El juego
+        sortea cada cu&aacute;ntos gritos se &laquo;arma&raquo;: mientras no lo est&aacute;, el medidor se topa
+        justo debajo del umbral para no delatarlo, por muy fuerte que griten. Una vez
+        armado, se lo lleva el primer grito que llegue al umbral rojo.</p>
+      <div class="campo"><label>Stock disponible</label>
+        <div class="stepper"><button data-k="stockAlto" data-d="-1">&minus;</button><span id="v-stockAlto">?</span><button data-k="stockAlto" data-d="1">+</button></div></div>
+      <div class="campo"><label>Se arma como pronto (gritos)</label>
+        <div class="stepper"><button data-k="altoMin" data-d="-1">&minus;</button><span id="v-altoMin">?</span><button data-k="altoMin" data-d="1">+</button></div></div>
+      <div class="campo"><label>Se arma como tarde (gritos)</label>
+        <div class="stepper"><button data-k="altoMax" data-d="-1">&minus;</button><span id="v-altoMax">?</span><button data-k="altoMax" data-d="1">+</button></div></div>
+      <p class="ayuda">Cada vez que sale un premio mayor se vuelve a sortear en ese rango.
+        Cambiar estos n&uacute;meros vuelve a sortear al instante.</p>
+      <div class="estado-sorteo" id="estadoSorteo">&mdash;</div>
+      <button class="btn-cal azul ancho" id="btnResetSorteo">Reiniciar sorteo (stock lleno)</button>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Activaci&oacute;n de la tablet</h3>
+      <p class="ayuda">El c&oacute;digo se pide <b>una sola vez por tablet</b>, al instalar.
+        El personal del evento no lo necesita. Sirve para que la app no quede
+        funcionando en tablets ajenas si alguien comparte el enlace.</p>
+      <div class="estado-sorteo" id="actEstado">&mdash;</div>
+      <button class="btn-cal gris ancho" id="btnBloquearTablet">Bloquear esta tablet</button>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Registro de participantes</h3>
+      <p class="ayuda">Pide nombre y c&eacute;dula antes de cada partida. Los datos
+        <b>no salen de esta tablet</b>: se guardan aqu&iacute; y se exportan a CSV cuando t&uacute; quieras.</p>
+      <div class="campo"><label>Pedir registro para jugar</label>
+        <button class="btn-cal gris" id="btnRegistroOnOff" style="flex:0 0 auto;min-width:96px">&mdash;</button></div>
+      <div class="estado-sorteo" id="regResumen">&mdash;</div>
+      <div class="reg-lista" id="regLista"></div>
+      <button class="btn-cal verde ancho" id="btnRegCsv">Descargar CSV</button>
+      <button class="btn-cal gris ancho" id="btnRegBorrar">Borrar registros</button>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Estad&iacute;sticas</h3>
+      <div class="stats" id="stats"></div>
+      <button class="btn-cal azul ancho" id="btnResetStats">Borrar estad&iacute;sticas</button>
+    </div>
+
+    <div class="tarjeta">
+      <button class="btn-cal gris ancho" id="btnRestaurar">Restaurar valores por defecto</button>
+      <button class="btn-negro ancho" id="btnCerrarPanel">VOLVER AL JUEGO</button>
+    </div>
+  </div>
+</section>
+
+<!-- boton pequeno para abrir ajustes: esquina superior derecha -->
+<button class="btn-tuerca" id="btnTuerca" aria-label="Ajustes">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="3.2"/>
+    <path d="M12 2.5v2.6M12 18.9v2.6M4.4 4.4l1.8 1.8M17.8 17.8l1.8 1.8M2.5 12h2.6M18.9 12h2.6M4.4 19.6l1.8-1.8M17.8 6.2l1.8-1.8"/>
+  </svg>
+</button>
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
