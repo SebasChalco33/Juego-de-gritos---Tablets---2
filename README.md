@@ -6,7 +6,8 @@ dispositivo y reparte premios por nivel.
 
 ## 🔴 EN VIVO
 
-**<https://sebaschalco33.github.io/Juego-de-gritos---Tablets---2/>**
+**<https://sebaschalco33.github.io/Juego-de-gritos---Tablets---2//>**
+
 
 Abre esa URL en la tablet → menú del navegador → **"Agregar a pantalla de inicio"**.
 
